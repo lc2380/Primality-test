@@ -1,5 +1,7 @@
 # Primality test and Ulam's Spiral
-
+Libraries:
+* Matplotlib
+* Numpy
 
 - The ***primality test*** was the first idea that I have made when I was learning the first things about Python.
   - Then, iterating the values, I used basic algebra to test every integer between $2$ and some limit of my choice $n$.
