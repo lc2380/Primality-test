@@ -28,7 +28,7 @@ fig = plt.figure()
 ax = plt.subplot(projection='polar', facecolor='black')
 
 # Spiral
-k = np.arange(0,nMax, 0.001) #¿Por qué los pasos tan chicos, si solo me importan los enteros?
+k = np.arange(0,nMax, 1) #¿Por qué los pasos tan chicos, si solo me importan los enteros?
 rho = np.sqrt(k)
 alpha = 2 * np.pi * q
 
