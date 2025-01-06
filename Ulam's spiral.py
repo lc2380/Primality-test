@@ -5,68 +5,59 @@ import matplotlib as mpl
 # number and nMax define the range of primality test
 
 number = 1
-nMax = 15000
+nMax = 30000
 primes = []
 
 # Primality test
-def test(number):
-    while number <= nMax:
-        if number in range(0, 2):
-            pass
-        else:
-            for a in range(2, int(np.sqrt(number))+1):
-                if number % a == 0:
-                    break
-            else:
-                primes.append(number)
-        number += 1
+def is_prime(number):
+    if number < 2:
+        return False
+    for a in range(2, int(np.sqrt(number)) + 1):
+        if number % a == 0:
+            return False
+    return True
 
-test(number) # Find the primes
+primes = np.array([number for number in range(2, nMax + 1) if is_prime(number)])
 
 # Axis
 fig = plt.figure()
 ax = plt.subplot(projection='polar', facecolor='black')
 
 # Spiral
-k = np.arange(0,nMax, 1) #¿Por qué los pasos tan chicos, si solo me importan los enteros?
+k = np.arange(0,nMax, 1)
 rho = np.sqrt(k)
-alpha = 2 * np.pi * q
+alpha = 2 * np.pi * rho
 
-ax.plot(alpha, rho, color = 'gray', linewidth=0.2) #0.2
+ax.plot(alpha, rho, color = 'gray', linewidth=0.1) #0.2
 plt.yticks([])
 
-# Points
+#Points
 n = np.arange(nMax)
 r = np.sqrt(n)
 theta = 2 * np.pi * r
 
-ax.plot(theta,r, '.', color = 'gray', markersize=0.4) #rosa e4717a #0.8
+ax.plot(theta,r, '.', color = 'gray', markersize=0.6, lw=0) #rosa e4717a #0.8
 ax.set_rticks([])
 
 # Primes
 p = np.sqrt(primes)
 omega = 2 * np.pi * p
 
-ax.plot(omega,p, 'o', color = 'green', markersize= 0.6) #green #1.5
+ax.plot(omega,p, '*', color='green', markersize= 0.6, lw=0) #green #1.5
 ax.set_rticks([]) # ¿Qué hace esto?
 
 # Euler polinomyal. If 0 <= s <= 41 then f(s) is a prime number
-s = np.arange(number, nMax+1, 1)
+s = np.arange(number, 40)
 f = s**2 - s + 41
 
 fIndex = np.arange(len(f))
-primeIndex = np.arange(len(primes))
 
-for f_i in fIndex:
-    while f[f_i] <= nMax:
-        sqrt_f = np.sqrt(f[f_i])
-        gamma = 2 * np.pi * sqrt_f
-        for p_i in primeIndex:
-            if f[p_i] == primes[p_i]:
-                ax.plot(gamma,sqrt_f, 'f_i', color = 'red', markersize = 0.6) #0.4
-        break
+sqrt_f = np.sqrt(f)
+gamma = 2 * np.pi * sqrt_f
+ax.plot(gamma,sqrt_f, '.', color = 'red', markersize = 0.6, lw=0) #0.4 0.6
 
-#plt.savefig(f"e-{nMax}.png", dpi = 800)
-#plt.savefig(f"{nMax}.svg")
+#plt.savefig(f"{len(primes)}.png", dpi = 1000)
+plt.savefig(f"{len(primes)}.svg")
+#plt.savefig(f"{len(primes)}.pdf", format="pdf")
 
 plt.show()
